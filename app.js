@@ -439,3 +439,42 @@ document.addEventListener('click', function(e) {
     dropdown.classList.add('hidden');
   }
 });
+
+
+// Theme Toggle Function
+function toggleTheme() {
+  const body = document.body;
+  const icon = document.getElementById('themeIcon');
+
+  if (body.classList.contains('light-mode') || !body.classList.contains('dark-mode')) {
+    // Switch to Dark Mode
+    body.classList.remove('light-mode');
+    body.classList.add('dark-mode');
+    icon.classList.replace('bi-sun-fill', 'bi-moon-stars-fill');
+    localStorage.setItem('wibba_theme', 'dark');
+  } else {
+    // Switch to Light Mode
+    body.classList.remove('dark-mode');
+    body.classList.add('light-mode');
+    icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
+    localStorage.setItem('wibba_theme', 'light');
+  }
+}
+
+// On Page Load — Apply Saved Theme
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('wibba_theme') || 'light';
+  const icon = document.getElementById('themeIcon');
+
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    icon.classList.replace('bi-sun-fill', 'bi-moon-stars-fill');
+  } else {
+    document.body.classList.add('light-mode');
+    icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
+  }
+
+  // Baki sab functions (checkAuth, etc.)
+  checkAuth();
+  document.getElementById('authBtn').onclick = handleAuth;
+});
